@@ -84,7 +84,7 @@ namespace v2rayN.Handler
                 // TODO: 统计配置
                 statistic(config, ref v2rayConfig);
 
-                Utils.ToJsonFile(v2rayConfig, fileName);
+                Utils.ToJsonFile(v2rayConfig, fileName, false);
 
                 msg = string.Format(UIRes.I18N("SuccessfulConfiguration"), config.getSummary());
             }
@@ -561,7 +561,7 @@ namespace v2rayN.Handler
                     };
                     if (!string.IsNullOrWhiteSpace(host))
                     {
-                        tlsSettings.serverName = host;
+                        tlsSettings.serverName = Utils.String2List(host)[0];
                     }
                     streamSettings.tlsSettings = tlsSettings;
                 }
@@ -577,7 +577,7 @@ namespace v2rayN.Handler
                     };
                     if (!string.IsNullOrWhiteSpace(host))
                     {
-                        xtlsSettings.serverName = host;
+                        xtlsSettings.serverName = Utils.String2List(host)[0];
                     }
                     streamSettings.xtlsSettings = xtlsSettings;
                 }
@@ -919,7 +919,7 @@ namespace v2rayN.Handler
                 //传出设置
                 ServerOutbound(config, ref v2rayConfig);
 
-                Utils.ToJsonFile(v2rayConfig, fileName);
+                Utils.ToJsonFile(v2rayConfig, fileName, false);
 
                 msg = string.Format(UIRes.I18N("SuccessfulConfiguration"), config.getSummary());
             }
@@ -1440,6 +1440,9 @@ namespace v2rayN.Handler
                     vmessItem.address = uri.IdnHost;
                     vmessItem.port = uri.Port;
                     vmessItem.id = uri.UserInfo;
+
+                    var qurery = HttpUtility.ParseQueryString(uri.Query);
+                    vmessItem.requestHost = qurery["sni"] ?? "";
 
                     var remarks = uri.Fragment.Replace("#", "");
                     if (Utils.IsNullOrEmpty(remarks))
