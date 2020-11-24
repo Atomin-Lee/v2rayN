@@ -296,7 +296,7 @@ namespace v2rayN.Handler
         /// </summary>
         /// <param name="updateToTrayTooltip">是否更新托盘图标的工具提示</param>
         /// <param name="msg">输出到日志框</param>
-        private void ShowMsg(bool updateToTrayTooltip, string msg)
+        public void ShowMsg(bool updateToTrayTooltip, string msg)
         {
             ProcessEvent?.Invoke(updateToTrayTooltip, msg);
         }

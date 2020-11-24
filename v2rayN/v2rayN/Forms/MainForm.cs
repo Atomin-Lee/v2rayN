@@ -11,6 +11,7 @@ using v2rayN.Tool;
 using System.Diagnostics;
 using System.Drawing;
 using System.Net;
+using System.Net.Http;
 
 namespace v2rayN.Forms
 {
@@ -1570,8 +1571,68 @@ namespace v2rayN.Forms
 
 
 
-        #endregion
 
-      
-    }
+		#endregion
+
+		#region 获取免费id的定时器
+		private void freev2Timer_Tick(object sender, EventArgs e)
+		{
+			this.GetFreeV2();
+		}
+
+		private void GetFreeV2()
+		{
+			List<VmessItem> items = config.vmess;
+			VmessItem target = null;
+			int index = 0;
+			for (int i = 0; i < items.Count; i++)
+			{
+				VmessItem item = items[i];
+
+				if (item.address.Equals("auto.freev2.top"))
+				{
+					target = item;
+					index = i;
+					break;
+				}
+			}
+
+			if (target == null)
+			{
+				return;
+			}
+
+			Utils.SetSecurityProtocol();
+			WebRequestHandler webRequestHandler = new WebRequestHandler
+			{
+				AllowAutoRedirect = false
+			};
+
+			//HttpClient httpClient = new HttpClient(webRequestHandler);
+			string url = "https://view.freev2ray.org/";
+			//string html = await httpClient.GetStringAsync(url);
+			HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
+			//doc.LoadHtml(html);
+			var web = new HtmlAgilityPack.HtmlWeb();
+			doc = web.Load(url);
+
+			HtmlAgilityPack.HtmlNode portNode = doc.DocumentNode.SelectSingleNode("//span[@id='port']");
+			string port = portNode.InnerText;
+			HtmlAgilityPack.HtmlNode uuidNode = doc.DocumentNode.SelectSingleNode("//span[@id='uuid']");
+			string uuid = uuidNode.InnerText;
+			target.id = uuid.TrimEx();
+			target.port = int.Parse(port.TrimEx());
+			ConfigHandler.AddServer(ref config, target, index);
+
+			string msg = "获取免费账号，信息: uuid=" + uuid + ",port=" + port;
+			// Console.Write(msg);
+			// v2rayHandler.ShowMsg(false, msg);
+
+			//刷新
+			RefreshServers();
+			LoadV2ray();
+			AppendText("获取freev2：" + msg);
+		}
+		#endregion
+	}
 }

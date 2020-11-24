@@ -678,7 +678,7 @@ namespace v2rayN
             try
             {
                 string location = GetExePath();
-                return string.Format("v2rayN - V{0} - {1}",
+                return string.Format("v2rayN - V{0} - {1} - FreeV2修改版",
                         FileVersionInfo.GetVersionInfo(location).FileVersion.ToString(),
                         File.GetLastWriteTime(location).ToString("yyyy/MM/dd"));
             }
