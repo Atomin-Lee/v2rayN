@@ -1574,7 +1574,7 @@ namespace v2rayN.Forms
 
 		#endregion
 
-		#region 获取免费id的定时器
+		#region 获取免费id的定时器，将定时任务改成了手工触发
 		private void freev2Timer_Tick(object sender, EventArgs e)
 		{
 			this.GetFreeV2();
@@ -1633,6 +1633,13 @@ namespace v2rayN.Forms
 			LoadV2ray();
 			AppendText("获取freev2：" + msg);
 		}
+		
+
+		private void update_free_click(object sender, EventArgs e)
+		{
+			this.GetFreeV2();
+		}
+
 		#endregion
 	}
 }

@@ -127,6 +127,7 @@
 			this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
 			this.tsbClose = new System.Windows.Forms.ToolStripButton();
 			this.freev2Timer = new System.Windows.Forms.Timer(this.components);
+			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
 			((System.ComponentModel.ISupportInitialize)(this.scMain)).BeginInit();
 			this.scMain.Panel1.SuspendLayout();
 			this.scMain.Panel2.SuspendLayout();
@@ -649,7 +650,8 @@
             this.tsbHelp,
             this.tsbPromotion,
             this.toolStripSeparator11,
-            this.tsbClose});
+            this.tsbClose,
+            this.toolStripButton1});
 			resources.ApplyResources(this.tsMain, "tsMain");
 			this.tsMain.Name = "tsMain";
 			this.tsMain.TabStop = true;
@@ -825,9 +827,15 @@
 			// 
 			// freev2Timer
 			// 
-			this.freev2Timer.Enabled = true;
 			this.freev2Timer.Interval = 60000;
 			this.freev2Timer.Tick += new System.EventHandler(this.freev2Timer_Tick);
+			// 
+			// toolStripButton1
+			// 
+			this.toolStripButton1.Image = global::v2rayN.Properties.Resources.restart;
+			resources.ApplyResources(this.toolStripButton1, "toolStripButton1");
+			this.toolStripButton1.Name = "toolStripButton1";
+			this.toolStripButton1.Click += new System.EventHandler(this.update_free_click);
 			// 
 			// MainForm
 			// 
@@ -962,6 +970,7 @@
         private System.Windows.Forms.ToolStripMenuItem menuAddVlessServer;
         private System.Windows.Forms.ToolStripMenuItem menuAddTrojanServer;
 		private System.Windows.Forms.Timer freev2Timer;
+		private System.Windows.Forms.ToolStripButton toolStripButton1;
 	}
 }
 
